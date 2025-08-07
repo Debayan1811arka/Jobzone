@@ -5,7 +5,7 @@ const cors = require("cors")
 
 // ✅ Allow only specific frontend origin (fixes CORS issue)
 app.use(cors({
-    origin: "https://jobzone-fk6f49kr5-debayan-pals-projects.vercel.app/", // Change this if frontend URL changes
+    origin: "https://jobzone-fk6f49kr5-debayan-pals-projects.vercel.app", // Change this if frontend URL changes
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true // If using cookies or authentication
