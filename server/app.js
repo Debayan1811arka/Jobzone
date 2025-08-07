@@ -1,23 +1,28 @@
-const express = require("express")
-const morgan = require("morgan")
-const app = express()
-const cors = require("cors")
+const express = require("express");
+const morgan = require("morgan");
+const app = express();
+const cors = require("cors");
 
 // ✅ Allow only specific frontend origin (fixes CORS issue)
-app.use(cors({
-    origin: "https://jobzone-fk6f49kr5-debayan-pals-projects.vercel.app", // Change this if frontend URL changes
+const corsOptions = {
+    origin: "https://jobzone-fk6f49kr5-debayan-pals-projects.vercel.app", // ✅ your frontend Vercel domain
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true // If using cookies or authentication
-}));
+    credentials: true // if you're using cookies/auth
+};
 
-app.options("*", cors());
- 
-app.use(express.json({}))
-app.use(express.urlencoded({extended:false}))
-app.use(morgan("dev"))
-app.use(cors())
+app.use(cors(corsOptions));
 
-app.use("/api/v1", require("./routes"))
+// ✅ Handle preflight requests properly
+app.options("*", cors(corsOptions));
 
-module.exports = app
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(morgan("dev"));
+
+// ❌ Don't re-add default CORS middleware again
+// app.use(cors()); // ← REMOVE this line
+
+app.use("/api/v1", require("./routes"));
+
+module.exports = app;
