@@ -99,28 +99,29 @@ const AddJob = () => {
                  <div className="mb-3">
 
                   <label htmlFor="skills" >Skills</label>
-                     <ul className="flex flex-wrap gap-2">
-{
+        <ul className="flex flex-wrap gap-2">
+  {skills.map((skill, index) => (
+    <li
+      key={index}
+      onClick={() => {
+        if (values.skills.includes(skill)) {
+          const filter_skills = values.skills.filter((cur) => cur !== skill);
+          setFieldValue('skills', filter_skills);
+        } else {
+          setFieldValue('skills', [...values.skills, skill]);
+        }
+      }}
+      className={`px-3 py-2 border border-blue-500 cursor-pointer text-sm rounded-sm text-center break-words min-w-[70px] 
+        ${values.skills.includes(skill)
+          ? 'bg-blue-500 text-white'
+          : 'text-black'
+        }`}
+    >
+      {skill}
+    </li>
+  ))}
+</ul>
 
-                      skills.map((skill, index) => (
-
-                        <li onClick={()=>{
-                           
-                          if(values.skills.includes(skill)){
-
-                             const filter_skills = values.skills.filter((cur)=>cur !== skill)
-                             setFieldValue('skills', filter_skills)
-                          }
-                          else{
-                            setFieldValue('skills', [...values.skills, skill])
-                          }
-                                       
-                        }} 
-                        className={` 
-                        py-2 w-full border border-blue-500 px-3 cursor-pointer text-sm my-2 ${values.skills.includes(skill)? 'bg-blue-500 rounded-sm text-white' : 'border-blue-500 text-black'} `}>{skill} </li>
-                      )) 
-                       
-                     }</ul>
                  <ErrorMessage name="skills" component="p" className="text-red-500 text-xs" />
                  </div>
 
