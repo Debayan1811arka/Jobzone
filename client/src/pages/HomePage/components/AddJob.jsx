@@ -99,7 +99,8 @@ const AddJob = () => {
                  <div className="mb-3">
 
                   <label htmlFor="skills" >Skills</label>
-                     <ul className='grid grid-cols-5 gap-x-2'>{
+                     <ul className="flex flex-wrap gap-2">
+{
 
                       skills.map((skill, index) => (
 
