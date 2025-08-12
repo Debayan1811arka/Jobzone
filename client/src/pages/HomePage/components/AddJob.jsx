@@ -99,7 +99,7 @@ const AddJob = () => {
                  <div className="mb-3">
 
                   <label htmlFor="skills" >Skills</label>
-        <ul className="flex flex-wrap gap-2">
+       <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
   {skills.map((skill, index) => (
     <li
       key={index}
@@ -111,7 +111,7 @@ const AddJob = () => {
           setFieldValue('skills', [...values.skills, skill]);
         }
       }}
-      className={`px-3 py-2 border border-blue-500 cursor-pointer text-sm rounded-sm text-center break-words min-w-[70px] 
+      className={`border border-blue-500 cursor-pointer text-sm rounded-sm text-center break-words px-2 py-2 
         ${values.skills.includes(skill)
           ? 'bg-blue-500 text-white'
           : 'text-black'
@@ -121,6 +121,7 @@ const AddJob = () => {
     </li>
   ))}
 </ul>
+
 
                  <ErrorMessage name="skills" component="p" className="text-red-500 text-xs" />
                  </div>
