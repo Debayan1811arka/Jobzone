@@ -5,7 +5,7 @@ const cors = require("cors");
 
 // ✅ Allow only specific frontend origin (fixes CORS issue)
 const corsOptions = {
-    origin: "https://jobzone-82opa30dc-debayan-pals-projects.vercel.app/", // ✅ your frontend Vercel domain
+    origin: "https://jobzone-82opa30dc-debayan-pals-projects.vercel.app", // ✅ your frontend Vercel domain
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true // if you're using cookies/auth
