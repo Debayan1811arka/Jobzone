@@ -3,25 +3,34 @@ const morgan = require("morgan");
 const app = express();
 const cors = require("cors");
 
-// ✅ Allow only specific frontend origin (fixes CORS issue)
+const allowedOrigins = [
+  "http://localhost:3000", // local dev
+  "https://jobzone-delta.vercel.app", // stable domain
+  /\.vercel\.app$/ // ✅ allow all Vercel preview deployments
+];
+
 const corsOptions = {
-    origin: "https://jobzone-delta.vercel.app", // ✅ your frontend Vercel domain
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true // if you're using cookies/auth
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.some(o =>
+        (typeof o === "string" && o === origin) ||
+        (o instanceof RegExp && o.test(origin))
+      )) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS: " + origin));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 };
 
 app.use(cors(corsOptions));
-
-// ✅ Handle preflight requests properly
 app.options("*", cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
-
-// ❌ Don't re-add default CORS middleware again
-// app.use(cors()); // ← REMOVE this line
 
 app.use("/api/v1", require("./routes"));
 
